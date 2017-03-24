@@ -52,7 +52,7 @@ wait $RAILS_PID $RUBY_PID
 cd ../../../sdocs
 
 log "Merging Ruby and Rails SDOC"
-sdoc-merge --title "Ruby $RUBY_VERSION, Rails $RAILS_VERSION" --op rails-ruby --names "Ruby $RUBY_VERSION,Rails $RAILS_VERSION" ruby-$RUBY_VERSION rails-$RAILS_VERSION
+sdoc-merge --title "Ruby $RUBY_VERSION, Rails $RAILS_VERSION" --op ../docs --names "Ruby $RUBY_VERSION,Rails $RAILS_VERSION" ruby-$RUBY_VERSION rails-$RAILS_VERSION
 
 # cleanup
 log "Cleaning up"
@@ -60,5 +60,5 @@ rm -rf rails-$RAILS_VERSION ruby-$RUBY_VERSION
 rm -rf ../repos
 
 log "========================================"
-log "Merged SDOC is now in 'sdocs/rails-ruby'"
+log "Merged SDOC is now in 'docs'"
 log "========================================"
