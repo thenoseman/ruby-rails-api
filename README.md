@@ -7,3 +7,5 @@ Change `generate.sh` to choos which ruby and rails version to use.
 
 Runs on mac with homebrew.
 
+Example at https://thenoseman.github.io/ruby-231-rails-502/
+
