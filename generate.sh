@@ -66,6 +66,8 @@ log "Generating SDOC for Rails ${RAILS_VERSION} in the background"
 bundle exec sdoc -q -o ../../sdocs/rails-$RAILS_VERSION --line-numbers --format=sdoc -T rails --github --exclude='_test.rb$' --exclude='.*\/test\/.*' . &
 RAILS_PID=$!
 
+exit
+
 # Ruby
 log "Fetching ruby $RUBY_VERSION from ruby-lang.org"
 cd ..
@@ -90,8 +92,6 @@ bundle exec sdoc-merge --title "Ruby $RUBY_VERSION, Rails $RAILS_VERSION" --op .
 
 # cleanup
 log "Cleaning up"
-rm -rf rails-$RAILS_VERSION ruby-$RUBY_VERSION
-rm -rf ../repos
 
 log "========================================"
 log "Merged SDOC is now in 'docs'"
