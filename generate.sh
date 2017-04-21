@@ -63,10 +63,8 @@ git ch $RAILS_VERSION
 bundle install
 
 log "Generating SDOC for Rails ${RAILS_VERSION} in the background"
-bundle exec sdoc -q -o ../../sdocs/rails-$RAILS_VERSION --line-numbers --format=sdoc -T rails --github --exclude='_test.rb$' --exclude='.*\/test\/.*' . &
+bundle exec sdoc -q -o ../../sdocs/rails-$RAILS_VERSION --line-numbers --format=sdoc -T rails --github --exclude "\/test\/" --exclude ".*_test.rb$" . &
 RAILS_PID=$!
-
-exit
 
 # Ruby
 log "Fetching ruby $RUBY_VERSION from ruby-lang.org"
