@@ -7,16 +7,46 @@ ccgreen=$(echo -e "\033[32m")
 ccyellow=$(echo -e "\033[33m")
 ccend=$(echo -e "\033[0m")
 
-RAILS_VERSION="v5.0.2"
-RUBY_VERSION="2.3.1"
+RAILS_VERSION=""
+RUBY_VERSION=""
 
 log() {
   echo "${ccyellow}${1}${ccend}"
 }
 
+usage() { 
+  echo "Generates the API docs for a given Rails and Ruby version"
+  echo "Works on MacOSX"
+  echo "Usage: $0 -u <ruby_version> -a <rails_version>"
+  echo "  eg.: $0 -u 2.4.3 -a 5.0.2"
+  exit 1; 
+}
+
+while getopts "u:a:" opt; do
+  case $opt in
+    u) RUBY_VERSION="${OPTARG}"
+      ;;
+    a) RAILS_VERSION="v${OPTARG}"
+      ;;
+    *) usage
+      ;;
+  esac
+done
+
+[ -z "${RUBY_VERSION}" ] || [ -z "${RAILS_VERSION}" ] && usage
+
+log "Generating API docs for"
+log "Ruby Version ${RUBY_VERSION}"
+log "Rails Version ${RAILS_VERSION}"
+log "Press ENTER to continue"
+read
+
 bundle
 
 log "Creating directories"
+rm -rf repos
+rm -rf sdocs
+rm -rf docs
 mkdir -p repos
 mkdir -p sdocs
 cd repos
