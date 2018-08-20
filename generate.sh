@@ -76,7 +76,7 @@ curl -o ruby.tar.bz2 http://ftp.ruby-lang.org/pub/ruby/ruby-$RUBY_VERSION.tar.bz
 tar xjf ruby.tar.bz2
 cd ruby-$RUBY_VERSION
 log "Generating SDOC for ruby ${RUBY_VERSION} in the background"
-bundle exec sdoc -q -o ../../../sdocs/ruby-$RUBY_VERSION --line-numbers --format=sdoc -T rails --github . &
+bundle exec sdoc -q -o ../../../sdocs/ruby-$RUBY_VERSION --line-numbers --format=sdoc -T rails --github --exclude ".*rubygems.*" --exclude ".*rdoc.*" . &
 RUBY_PID=$!
 
 log "Waiting for RUBY and RAILS sdoc background jobs to finish"
