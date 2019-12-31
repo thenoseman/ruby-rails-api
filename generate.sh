@@ -52,27 +52,31 @@ mkdir -p sdocs
 cd repos
 
 log "Preparing system for rails ${RAILS_VERSION} install"
-brew install mysql
+brew install mysql postgresql
 
 # Rails
 log "Fetching Rails $RAILS_VERSION repo from github.com"
 rm -rf rails
 git clone --branch ${RAILS_VERSION} --single-branch --depth 1 https://github.com/rails/rails.git
 cd rails
+BUNDLER_VERSION=$(grep "BUNDLED WITH" Gemfile.lock -A 1 | tail -n 1 | tr -d ' ')
+log "Installing bundler version ${BUNDLER_VERSION} for rails"
+gem install bundler -v $BUNDLER_VERSION
 git ch $RAILS_VERSION
-bundle install
+bundle _${BUNDLER_VERSION}_ install
 
 log "Generating SDOC for Rails ${RAILS_VERSION} in the background"
 bundle exec sdoc -q -o ../../sdocs/rails-$RAILS_VERSION --line-numbers --format=sdoc -T rails --github --exclude "\/test\/" --exclude ".*_test.rb$" . &
 RAILS_PID=$!
 
 # Ruby
-log "Fetching ruby $RUBY_VERSION from ruby-lang.org"
+RUBY_URL="http://ftp.ruby-lang.org/pub/ruby/ruby-$RUBY_VERSION.tar.bz2"
+log "Fetching ruby $RUBY_VERSION from $RUBY_URL"
 cd ..
 rm -rf ruby
 mkdir ruby
 cd ruby
-curl -o ruby.tar.bz2 http://ftp.ruby-lang.org/pub/ruby/ruby-$RUBY_VERSION.tar.bz2
+curl -o ruby.tar.bz2 $RUBY_URL
 tar xjf ruby.tar.bz2
 cd ruby-$RUBY_VERSION
 log "Generating SDOC for ruby ${RUBY_VERSION} in the background"
